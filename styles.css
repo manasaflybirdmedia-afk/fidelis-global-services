@@ -480,6 +480,24 @@ select {
   gap: 12px;
   color: #dbe0f4;
 }
+.footer-credit {
+  width: 100%;
+  text-align: center;
+  padding-top: 14px;
+  margin-top: 10px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  color: rgba(219,224,244,0.6);
+  font-size: 0.82rem;
+  letter-spacing: 0.03em;
+}
+.footer-credit a {
+  color: rgba(219,224,244,0.85);
+  font-weight: 600;
+  text-decoration: none;
+}
+.footer-credit a:hover {
+  color: #ffffff;
+}
 .footer a {
   color: #dbe0f4;
 }
