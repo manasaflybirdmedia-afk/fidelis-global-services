@@ -534,6 +534,7 @@ select {
 }
 .section-header {
   max-width: 720px;
+  text-align: left;
 }
 /* Gold button */
 .button.gold {
@@ -572,7 +573,10 @@ select {
   position: relative;
   z-index: 2;
   padding: 120px 0 80px;
-  max-width: 720px;
+  text-align: left;
+}
+.hero-full-inner {
+  max-width: 680px;
 }
 .hero-badge {
   display: inline-flex;
