@@ -552,8 +552,7 @@ select {
 .hero-full {
   position: relative;
   min-height: 100vh;
-  display: flex;
-  align-items: center;
+  display: block;
   background: #0b1930;
   overflow: hidden;
 }
@@ -572,11 +571,10 @@ select {
 .hero-full-content {
   position: relative;
   z-index: 2;
-  padding: 120px 0 80px;
+  width: min(100% - 32px, var(--max-width));
+  margin: 0 auto;
+  padding: 130px 0 90px;
   text-align: left;
-}
-.hero-full-inner {
-  max-width: 680px;
 }
 .hero-badge {
   display: inline-flex;
