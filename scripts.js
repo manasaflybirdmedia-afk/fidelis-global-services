@@ -31,7 +31,29 @@
     }
   });
 
-  /* ── Contact form ── */
+  /* ── Free Consultation button: call on mobile, WhatsApp on desktop ── */
+  var consultBtn = document.querySelector('.js-consult-btn');
+  if (consultBtn) {
+    consultBtn.addEventListener('click', function (e) {
+      var isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
+      var phone = this.dataset.phone;
+      var waUrl = this.dataset.wa;
+
+      if (isMobile) {
+        // On mobile: attempt tel: dial; browser handles gracefully if unsupported
+        e.preventDefault();
+        var telLink = document.createElement('a');
+        telLink.href = 'tel:' + phone;
+        telLink.click();
+      } else {
+        // On desktop: open WhatsApp Web
+        e.preventDefault();
+        window.open(waUrl, '_blank', 'noopener,noreferrer');
+      }
+    });
+  }
+
+
   var form = document.querySelector('.js-contact-form');
   if (form) {
     form.addEventListener('submit', function (e) {
