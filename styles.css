@@ -53,7 +53,7 @@ h1, h2, h3, h4 {
   line-height: 1.2;
   color: var(--navy);
 }
-h1 { font-size: clamp(2.4rem, 5vw, 3.6rem); font-weight: 900; }
+h1 { font-size: clamp(2.8rem, 6vw, 4.8rem); font-weight: 900; }
 h2 { font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 700; }
 h3 { font-size: 1.2rem; font-weight: 700; }
 p  { font-size: 1rem; color: var(--text-muted); }
@@ -155,7 +155,7 @@ p  { font-size: 1rem; color: var(--text-muted); }
   padding: 16px 0;
 }
 .brand { display: flex; align-items: center; flex-shrink: 0; }
-.brand-logo { height: 56px; width: auto; object-fit: contain; }
+.brand-logo { height: 64px; width: auto; object-fit: contain; }
 .brand-text {
   display: flex;
   flex-direction: column;
@@ -216,7 +216,7 @@ p  { font-size: 1rem; color: var(--text-muted); }
   inset: 0;
   background-size: cover;
   background-position: center right;
-  opacity: 0.4;
+  opacity: 0.45;
 }
 .hero-overlay {
   position: absolute;
@@ -248,7 +248,7 @@ p  { font-size: 1rem; color: var(--text-muted); }
 /* ── SERVICES ── */
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 24px;
 }
 .scard {
@@ -315,20 +315,9 @@ p  { font-size: 1rem; color: var(--text-muted); }
   cursor: pointer;
 }
 .ccard:hover { background: rgba(201,162,39,0.10); border-color: rgba(201,162,39,0.4); transform: translateY(-4px); }
-.cflag { font-size: 2.4rem; flex-shrink: 0; line-height: 1; }
+.cflag { width: 56px; height: 40px; flex-shrink: 0; object-fit: cover; border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.35); }
 .ccard-info h3 { color: var(--white); margin-bottom: 4px; font-size: 1.05rem; }
 .ccard-info p { font-size: 0.82rem; color: rgba(219,224,244,0.60); margin: 0; }
-.ccard-info .ccard-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  margin-top: 10px;
-  font-size: 0.82rem;
-  font-weight: 600;
-  color: var(--gold);
-  letter-spacing: 0.03em;
-}
-.ccard-link::after { content: '&#x2192;'; }
 
 /* ── WHY CHOOSE US ── */
 .why-us-grid {
