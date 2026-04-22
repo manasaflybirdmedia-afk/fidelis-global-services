@@ -1,293 +1,553 @@
-# Build all service and country pages
+Set-StrictMode -Version Latest
+$ErrorActionPreference = 'Stop'
 
-function Get-PageNav {
-    return @'
-    <header class="header" id="top">
-      <div class="container header-inner">
-        <a class="brand" href="/"><img class="brand-logo" src="/media/logo-BsiFmlEp.png" alt="Fidelis Global Services" /></a>
-        <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button>
-        <nav class="nav" id="main-nav" aria-label="Primary navigation">
-          <a href="/">Home</a>
-          <a href="/#services">Services</a>
-          <a href="/#countries">Countries</a>
-          <a href="/#contact">Contact</a>
-        </nav>
-        <div class="action-group"><a class="btn btn-gold" href="/#contact">Free Consultation</a></div>
-      </div>
-    </header>
-'@
-}
+$Root = Split-Path -Parent $MyInvocation.MyCommand.Path
+$PhoneDisplay = '+971 50 236 1789'
+$PhoneHref = '+971502361789'
+$Email = 'info@fidelisglobalservices.com'
+$WaBase = 'https://wa.me/971502361789?text='
 
-function Get-PageFooter {
-    return @'
-    <footer class="footer">
-      <div class="container footer-main">
-        <div class="footer-brand">
-          <a href="/"><img class="brand-logo footer-logo" src="/media/logo-BsiFmlEp.png" alt="Fidelis Global Services" /></a>
-          <span class="footer-brand-name">FIDELIS<span>GLOBAL</span> SERVICES</span>
-        </div>
-        <nav class="footer-nav" aria-label="Footer navigation">
-          <a href="/">Home</a>
-          <a href="/#services">Services</a>
-          <a href="/#countries">Countries</a>
-          <a href="/#contact">Contact</a>
-        </nav>
-      </div>
-      <div class="footer-bottom">
-        <div class="container footer-bottom-inner">
-          <span>&copy; 2026 Fidelis Global Services</span>
-        </div>
-      </div>
-    </footer>
-    <a class="wa-float" href="https://wa.me/919876543210?text=Hello%20Fidelis%20Global%20Services" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
-      <svg viewBox="0 0 24 24" fill="currentColor" width="28" height="28"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+function Get-Header {
+@"
+<header class="header" id="top">
+  <div class="container header-inner">
+    <a class="brand" href="/">
+      <img class="brand-logo" src="/media/logo.jpeg" alt="Fidelis Global Services" />
     </a>
-    <script src="/scripts.js"></script>
-'@
+    <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="nav" id="main-nav" aria-label="Primary navigation">
+      <a href="/">Home</a>
+      <a href="/#services">Services</a>
+      <a href="/#countries">Countries</a>
+      <a href="/#why-us">Why Us</a>
+      <a href="/#contact">Contact</a>
+    </nav>
+    <div class="action-group">
+      <a class="btn btn-gold js-consult-btn" href="tel:$PhoneHref" data-phone="$PhoneHref" data-wa="$($WaBase + [uri]::EscapeDataString('Hello Fidelis Global Services, I would like a free consultation.'))" aria-label="Free Consultation - call or WhatsApp">&#x1F4DE; Free Consultation</a>
+    </div>
+  </div>
+</header>
+"@
 }
 
-function Build-ServicePage {
-    param($slug, $title, $icon, $tagline, $description, $features, $bgImg)
-    
-    $nav = Get-PageNav
-    $footer = Get-PageFooter
-    $featuresHtml = ($features | ForEach-Object { "                <li><span class=`"trust-check`">&#x2714;</span> $_</li>" }) -join "`n"
-    
-    return @"
+function Get-Footer {
+@"
+<footer class="footer">
+  <div class="container footer-main">
+    <div class="footer-brand">
+      <a class="brand" href="/"><img class="brand-logo footer-logo" src="/media/logo.jpeg" alt="Fidelis Global Services" /></a>
+      <p>Your trusted partner for passport, visa, travel, and immigration assistance worldwide.</p>
+      <div class="footer-contact-links">
+        <a href="tel:$PhoneHref">$PhoneDisplay</a>
+        <a href="mailto:$Email">$Email</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="/services/student-visas/">Student Visa</a></li>
+        <li><a href="/services/tourist-visas/">Tourist Visa</a></li>
+        <li><a href="/services/business-visas/">Business &amp; PR</a></li>
+        <li><a href="/services/document-guidance/">Document Guidance</a></li>
+        <li><a href="/services/appointment-scheduling/">Appointment Scheduling</a></li>
+        <li><a href="/services/personalized-consultancy/">Personalized Consultancy</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Countries</h4>
+      <ul>
+        <li><a href="/countries/united-kingdom/">United Kingdom</a></li>
+        <li><a href="/countries/united-states/">United States</a></li>
+        <li><a href="/countries/australia/">Australia</a></li>
+        <li><a href="/countries/uae/">UAE</a></li>
+        <li><a href="/countries/canada/">Canada</a></li>
+        <li><a href="/countries/europe/">Europe</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/#services">Services</a></li>
+        <li><a href="/#countries">Countries</a></li>
+        <li><a href="/#why-us">Why Us</a></li>
+        <li><a href="/#contact">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container footer-bottom-inner">
+      <span>&copy; 2026 Fidelis Global Services</span>
+      <span>Designed by <a href="https://flybirdmedia.com" target="_blank" rel="noopener">Fly Bird Media Team</a></span>
+    </div>
+  </div>
+</footer>
+<a class="wa-float" href="$($WaBase + [uri]::EscapeDataString('Hello Fidelis Global Services'))" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor" width="28" height="28"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+<script src="/scripts.js"></script>
+"@
+}
+
+function Get-StatsPanel {
+@"
+        <div class="why-us-stats reveal reveal-delay-1">
+          <div class="trust-stat-big">
+            <strong>95%</strong>
+            <span>Success Rate</span>
+            <p>Across all visa categories and countries</p>
+          </div>
+          <div class="trust-stats-row">
+            <div class="trust-stat"><strong>10K+</strong><span>Happy Clients</span></div>
+            <div class="trust-stat"><strong>15+</strong><span>Countries</span></div>
+            <div class="trust-stat"><strong>10+</strong><span>Years Experience</span></div>
+            <div class="trust-stat"><strong>24/7</strong><span>Support</span></div>
+          </div>
+        </div>
+"@
+}
+
+function Get-ProcessSection {
+  param([string]$Title)
+
+@"
+  <section class="section section-off">
+    <div class="container">
+      <div class="section-hd reveal">
+        <span class="eyebrow eyebrow-dark">How It Works</span>
+        <h2>Your $Title Journey in 4 Steps</h2>
+        <p>We simplify every stage with clear guidance, documentation support, and responsive updates.</p>
+      </div>
+      <div class="process-track">
+        <div class="pstep reveal"><div class="pnum">01</div><h3>Consultation</h3><p>We assess your profile and recommend the most suitable route for your goals.</p></div>
+        <div class="pstep reveal reveal-delay-1"><div class="pnum">02</div><h3>Documentation</h3><p>Our team prepares a clean checklist and reviews every required document.</p></div>
+        <div class="pstep reveal reveal-delay-2"><div class="pnum">03</div><h3>Filing Support</h3><p>We help you submit a complete application with accurate, timely guidance.</p></div>
+        <div class="pstep reveal reveal-delay-3"><div class="pnum">04</div><h3>Post-Submission</h3><p>We stay with you through updates, decision support, and next-step planning.</p></div>
+      </div>
+    </div>
+  </section>
+"@
+}
+
+function Get-CtaSection {
+  param([string]$Title)
+
+  $waUrl = $WaBase + [uri]::EscapeDataString("I need help with $Title")
+
+@"
+  <section class="cta-banner">
+    <div class="container">
+      <div class="section-hd reveal" style="margin-bottom:28px;">
+        <span class="eyebrow eyebrow-white">Get Started</span>
+        <h2 style="color:#fff;">Ready to move forward?</h2>
+        <p>Speak with our team for clear next steps, timelines, and documentation guidance.</p>
+      </div>
+      <div class="cta-actions reveal">
+        <a class="btn btn-gold" href="/#contact">Book Free Consultation</a>
+        <a class="btn btn-outline-white" href="$waUrl" target="_blank" rel="noopener">&#x1F4AC; WhatsApp Us</a>
+      </div>
+    </div>
+  </section>
+"@
+}
+
+function Build-Page {
+  param(
+    [string]$PageTitle,
+    [string]$MetaDescription,
+    [string]$Eyebrow,
+    [string]$HeroTitle,
+    [string]$HeroDescription,
+    [string]$HeroImage,
+    [string]$SecondaryLabel,
+    [string]$SecondaryHref,
+    [string]$SectionLabel,
+    [string]$SectionTitle,
+    [string]$SectionDescription,
+    [string[]]$Features,
+    [string]$JourneyTitle
+  )
+
+  $Header = Get-Header
+  $Footer = Get-Footer
+  $Stats = Get-StatsPanel
+  $Process = Get-ProcessSection -Title $JourneyTitle
+  $Cta = Get-CtaSection -Title $JourneyTitle
+  $FeaturesHtml = ($Features | ForEach-Object { '              <li><span class="trust-check">&#x2714;</span> ' + $_ + '</li>' }) -join "`n"
+
+@"
 <!doctype html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>$title | Fidelis Global Services</title>
-    <meta name="description" content="$tagline" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="/styles.css" />
-  </head>
-  <body>
-$nav
-    <main>
-      <section class="service-hero" style="background-image:url('/media/$bgImg');">
-        <div class="service-hero-overlay"></div>
-        <div class="service-hero-body">
-          <div class="container">
-            <div class="service-hero-content reveal">
-              <span class="eyebrow">$icon $title</span>
-              <h1>$tagline</h1>
-              <p>$description</p>
-              <div class="hero-actions">
-                <a class="btn btn-gold" href="/#contact">Book Free Consultation</a>
-                <a class="btn btn-outline-white" href="/#services">All Services</a>
-              </div>
-            </div>
-          </div>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>$PageTitle</title>
+  <meta name="description" content="$MetaDescription" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+$Header
+<main>
+  <section class="page-hero">
+    <div class="page-hero-bg" style="background-image:url('/media/$HeroImage');"></div>
+    <div class="page-hero-overlay"></div>
+    <div class="container">
+      <div class="page-hero-content reveal">
+        <span class="eyebrow eyebrow-white">$Eyebrow</span>
+        <h1>$HeroTitle</h1>
+        <p>$HeroDescription</p>
+        <div class="page-hero-actions">
+          <a class="btn btn-gold" href="/#contact">Book Free Consultation</a>
+          <a class="btn btn-outline-white" href="$SecondaryHref">$SecondaryLabel</a>
         </div>
-      </section>
+      </div>
+    </div>
+  </section>
 
-      <section class="section section-white">
-        <div class="container">
-          <div class="why-us-grid">
-            <div class="why-us-content reveal">
-              <span class="eyebrow eyebrow-dark">What We Offer</span>
-              <h2>Why Choose Fidelis for $title?</h2>
-              <p>Our team of certified immigration consultants brings years of expertise to ensure your application has the best possible chance of success.</p>
-              <ul class="trust-list">
-$featuresHtml
-              </ul>
-            </div>
-            <div class="why-us-stats reveal reveal-delay-1">
-              <div class="trust-stat-big">
-                <strong>98%</strong>
-                <span>Success Rate</span>
-                <p>Across all visa categories and countries</p>
-              </div>
-              <div class="trust-stats-row">
-                <div class="trust-stat"><strong>10K+</strong><span>Happy Clients</span></div>
-                <div class="trust-stat"><strong>50+</strong><span>Countries</span></div>
-                <div class="trust-stat"><strong>15+</strong><span>Years Exp.</span></div>
-                <div class="trust-stat"><strong>24/7</strong><span>Support</span></div>
-              </div>
-            </div>
-          </div>
+  <section class="section section-white">
+    <div class="container">
+      <div class="why-us-grid">
+        <div class="why-us-content reveal">
+          <span class="eyebrow eyebrow-dark">$SectionLabel</span>
+          <h2>$SectionTitle</h2>
+          <p>$SectionDescription</p>
+          <ul class="trust-list">
+$FeaturesHtml
+          </ul>
         </div>
-      </section>
+$Stats
+      </div>
+    </div>
+  </section>
 
-      <section class="section section-off">
-        <div class="container">
-          <div class="section-hd reveal">
-            <span class="eyebrow eyebrow-dark">How It Works</span>
-            <h2>Your $title Journey in 4 Steps</h2>
-            <p>We've streamlined every step so you can focus on your future.</p>
-          </div>
-          <div class="process-track process-track-4">
-            <div class="pstep reveal"><div class="pnum">01</div><h3>Free Consultation</h3><p>Assess eligibility and discuss the right pathway for your goals.</p></div>
-            <div class="pstep reveal reveal-delay-1"><div class="pnum">02</div><h3>Document Prep</h3><p>We provide a tailored checklist and help verify all required documents.</p></div>
-            <div class="pstep reveal reveal-delay-2"><div class="pnum">03</div><h3>Application Filing</h3><p>Our team submits a complete, reviewed application on your behalf.</p></div>
-            <div class="pstep reveal reveal-delay-3"><div class="pnum">04</div><h3>Approval &amp; Support</h3><p>Post-approval guidance and full support until you reach your destination.</p></div>
-          </div>
-        </div>
-      </section>
+$Process
 
-      <section class="section section-dark">
-        <div class="container">
-          <div class="section-hd reveal">
-            <span class="eyebrow eyebrow-gold">Get Started</span>
-            <h2>Ready to Apply for Your $title?</h2>
-            <p>Book a free consultation with our experts today.</p>
-          </div>
-          <div class="cta-actions reveal">
-            <a class="btn btn-gold" href="/#contact">Book Free Consultation</a>
-            <a class="btn btn-outline-white" href="https://wa.me/919876543210?text=I%20need%20help%20with%20$($title -replace ' ','%20')" target="_blank" rel="noopener">&#x1F4AC; WhatsApp Us</a>
-          </div>
-        </div>
-      </section>
-    </main>
-
-$footer
-  </body>
+$Cta
+</main>
+$Footer
+</body>
 </html>
 "@
 }
 
-# ---- SERVICE PAGES ----
-
-$services = @(
-    @{
-        slug = "student-visas"
-        title = "Student Visas"
-        icon = "&#x1F393;"
-        tagline = "Complete guidance for study abroad programs in top universities worldwide."
-        description = "We support students through every step of the visa process — from choosing the right university to submitting a flawless application and preparing for the embassy interview."
-        bgImg = "4014b254-d8f7-408c-a2b5-24423fec3d4c.png"
-        features = @(
-            "Eligibility assessment and university selection guidance",
-            "Complete documentation preparation and review",
-            "SOP and financial statement support",
-            "Embassy interview coaching",
-            "With or without IELTS — we find the right pathway",
-            "Post-arrival support and pre-departure briefing",
-            "Family visa extensions and dependant applications",
-            "Refused cases reviewed and resubmitted successfully"
-        )
-    },
-    @{
-        slug = "work-permits"
-        title = "Work Permits"
-        icon = "&#x1F4BC;"
-        tagline = "Skilled & unskilled worker visas with CoS availability and employer tie-ups."
-        description = "Whether you're a skilled professional or seeking unskilled work opportunities abroad, our team has established employer networks and CoS availability to fast-track your application."
-        bgImg = "7b4d535a-b8de-4c70-9d37-5727eb49f371.jpg"
-        features = @(
-            "Skilled Worker and unskilled work visa processing",
-            "Certificate of Sponsorship (CoS) availability",
-            "Employer tie-ups across UK, Canada, Australia &amp; UAE",
-            "Priority processing options available",
-            "With or without IELTS pathways",
-            "Spouse and dependent visa support",
-            "Pre-departure briefing and orientation",
-            "End-to-end application management"
-        )
-    },
-    @{
-        slug = "tourist-visas"
-        title = "Tourist Visas"
-        icon = "&#x2708;&#xFE0F;"
-        tagline = "Hassle-free tourist visa processing with high approval rates."
-        description = "Planning a holiday, family visit, or short trip abroad? Our expert team handles all the paperwork so you can focus on your travel plans with confidence."
-        bgImg = "04915694-4512-4990-a07a-b7a840da07cb.png"
-        features = @(
-            "Single and multiple entry tourist visa processing",
-            "Schengen, UK, USA, UAE, Australia &amp; more",
-            "Fast processing with 5–15 working day turnaround",
-            "Document checklist and itinerary planning support",
-            "High approval rates across all destinations",
-            "Group and family application handling",
-            "Travel insurance guidance",
-            "Refused cases reviewed and resubmitted"
-        )
-    },
-    @{
-        slug = "business-visas"
-        title = "Business Visas"
-        icon = "&#x1F3E2;"
-        tagline = "Investor & entrepreneur visas to launch your business internationally."
-        description = "Expand your business internationally or attend conferences, trade shows, and client meetings abroad. We handle investor, entrepreneur, and corporate travel visa applications."
-        bgImg = "456981be-04aa-4ec6-a77a-57c9e03a4c77.jpg"
-        features = @(
-            "Investor and entrepreneur visa pathways",
-            "Business visitor and corporate travel visas",
-            "UK Innovator Founder and Start-up visas",
-            "UAE and GCC business setup visas",
-            "Multiple entry long-validity business visas",
-            "Company registration and documentation support",
-            "Fast-track processing options",
-            "Conference and trade show travel visas"
-        )
-    },
-    @{
-        slug = "business-setup"
-        title = "Business Setup"
-        icon = "&#x1F527;"
-        tagline = "End-to-end company formation and business setup services abroad."
-        description = "From company registration to banking and licensing, we provide complete business setup services in the UK, UAE, Canada, and across Europe — so you can launch with confidence."
-        bgImg = "7a5fab8b-ff21-4c05-8ab9-b8f1a202ab6c.jpg"
-        features = @(
-            "Company registration in UK, UAE, Canada &amp; Europe",
-            "Sole trader, LLP, LLC, and PLC formation",
-            "Business banking account setup guidance",
-            "Trade license and regulatory compliance",
-            "Registered office address services",
-            "VAT and tax registration support",
-            "Employer setup and payroll guidance",
-            "Ongoing compliance and annual filing support"
-        )
-    },
-    @{
-        slug = "second-passport"
-        title = "Second Passport"
-        icon = "&#x1F30D;"
-        tagline = "Citizenship by investment programs for global mobility and security."
-        description = "Gain the freedom to live, work, and travel globally. We guide you through citizenship by investment programs in Caribbean nations, European countries, and beyond."
-        bgImg = "7f21cfb9-c507-4323-868c-044c7e8e85e9.jpg"
-        features = @(
-            "Caribbean citizenship programs (Dominica, St. Kitts, Grenada)",
-            "European golden visa pathways (Portugal, Malta, Cyprus)",
-            "Investment threshold guidance and due diligence",
-            "Visa-free travel to 150+ countries",
-            "Family inclusion on single application",
-            "No residency requirement programs available",
-            "Full legal and documentation support",
-            "Confidential and secure processing"
-        )
-    },
-    @{
-        slug = "immigration-assistance"
-        title = "Immigration Assistance"
-        icon = "&#x1F4CB;"
-        tagline = "Full immigration support including PR pathways and residency planning."
-        description = "Whether you're planning permanent residency, family reunification, or long-term immigration, our certified consultants design a complete strategy tailored to your situation."
-        bgImg = "7a5fab8b-ff21-4c05-8ab9-b8f1a202ab6c.jpg"
-        features = @(
-            "Permanent Residency (PR) pathways for UK, Canada &amp; Australia",
-            "Express Entry and Points-Based System guidance",
-            "Family reunification and spousal visa applications",
-            "Long-term residency and settlement applications",
-            "Naturalization and citizenship applications",
-            "Immigration appeal and review support",
-            "Refused case review and reapplication",
-            "End-to-end documentation and filing support"
-        )
-    }
+$Pages = @(
+  @{
+    Path = Join-Path $Root 'services\student-visas\index.html'
+    PageTitle = 'Student Visa Services | Fidelis Global Services'
+    MetaDescription = 'Complete student visa support for admissions, documentation, interview readiness, and pre-departure guidance.'
+    Eyebrow = 'Student Visa'
+    HeroTitle = 'Confident student visa guidance for your study abroad plans.'
+    HeroDescription = 'From admissions and financial documentation to interview preparation and pre-departure support, we help students move forward with clarity.'
+    HeroImage = '4014b254-d8f7-408c-a2b5-24423fec3d4c.png'
+    SecondaryLabel = 'All Services'
+    SecondaryHref = '/#services'
+    SectionLabel = 'What We Offer'
+    SectionTitle = 'Student visa support built around real application requirements.'
+    SectionDescription = 'Our team helps you prepare a strong student visa file with practical support at every stage.'
+    JourneyTitle = 'Student Visa'
+    Features = @(
+      'University shortlisting and profile review',
+      'Documentation checklist and application guidance',
+      'Financial file review and statement support',
+      'Statement of purpose and interview preparation',
+      'Country-specific compliance guidance',
+      'Pre-departure briefing and travel readiness',
+      'Support for refusals and reapplications'
+    )
+  },
+  @{
+    Path = Join-Path $Root 'services\tourist-visas\index.html'
+    PageTitle = 'Tourist Visa Services | Fidelis Global Services'
+    MetaDescription = 'Short-stay tourist visa support for holiday travel, family visits, and destination-specific documentation guidance.'
+    Eyebrow = 'Tourist Visa'
+    HeroTitle = 'Smooth tourist visa guidance for holidays, visits, and short-stay travel.'
+    HeroDescription = 'We help travellers prepare clean tourist visa applications with clear documentation guidance, itinerary support, and submission readiness.'
+    HeroImage = '04915694-4512-4990-a07a-b7a840da07cb.png'
+    SecondaryLabel = 'All Services'
+    SecondaryHref = '/#services'
+    SectionLabel = 'What We Offer'
+    SectionTitle = 'Tourist visa support built for clear travel plans and cleaner documentation.'
+    SectionDescription = 'Our team helps leisure travellers and family visitors prepare well-structured applications with the right supporting documents and timelines.'
+    JourneyTitle = 'Tourist Visa'
+    Features = @(
+      'Holiday and family-visit visa guidance',
+      'Travel itinerary and hotel booking support',
+      'Documentation checklist for short-stay travel',
+      'Financial proof and travel history review',
+      'Destination-specific application guidance',
+      'Submission-readiness check before filing',
+      'Support for reapplication after refusal where applicable'
+    )
+  },
+  @{
+    Path = Join-Path $Root 'services\business-visas\index.html'
+    PageTitle = 'Business & PR Pathways | Fidelis Global Services'
+    MetaDescription = 'Business migration, investor pathways, and PR guidance for clients planning long-term international mobility.'
+    Eyebrow = 'Business & PR'
+    HeroTitle = 'Business migration and PR guidance for long-term global plans.'
+    HeroDescription = 'We support business visa, investor, and permanent residency pathways with structured planning, documentation guidance, and filing support.'
+    HeroImage = 'ada808b9-7582-441b-b8d0-33fd34505080.jpg'
+    SecondaryLabel = 'All Services'
+    SecondaryHref = '/#services'
+    SectionLabel = 'What We Offer'
+    SectionTitle = 'Business and PR support aligned to your investment, expansion, or settlement goals.'
+    SectionDescription = 'Our team helps you assess the right route and build a clean application strategy for business mobility or permanent residency.'
+    JourneyTitle = 'Business & PR'
+    Features = @(
+      'Business visa and investor pathway guidance',
+      'PR profile review and route planning',
+      'Documentation and source-of-funds support',
+      'Application strategy for founders and entrepreneurs',
+      'Country-specific residency and settlement guidance',
+      'Family inclusion planning where available',
+      'Support for long-term relocation decisions'
+    )
+  },
+  @{
+    Path = Join-Path $Root 'services\document-guidance\index.html'
+    PageTitle = 'Document Guidance | Fidelis Global Services'
+    MetaDescription = 'Structured document guidance to keep your visa or immigration file complete, clear, and submission-ready.'
+    Eyebrow = 'Document Guidance'
+    HeroTitle = 'Clear document guidance for smoother visa and immigration preparation.'
+    HeroDescription = 'We help you organise, review, and strengthen your file before submission so every required document is ready and consistent.'
+    HeroImage = '73767eea-5b13-42c5-9dc9-364d163767f0.jpg'
+    SecondaryLabel = 'All Services'
+    SecondaryHref = '/#services'
+    SectionLabel = 'What We Offer'
+    SectionTitle = 'Document support focused on accuracy, clarity, and readiness.'
+    SectionDescription = 'Our team helps reduce avoidable document issues by checking consistency, completeness, and submission readiness.' 
+    JourneyTitle = 'Document Guidance'
+    Features = @(
+      'Personalized document checklist preparation',
+      'File review before submission',
+      'Guidance on financial and supporting records',
+      'Support for formatting and document order',
+      'Identification of missing or inconsistent items',
+      'Advice on affidavits, translations, and supporting letters',
+      'Submission-readiness review with practical next steps'
+    )
+  },
+  @{
+    Path = Join-Path $Root 'services\appointment-scheduling\index.html'
+    PageTitle = 'Appointment Scheduling | Fidelis Global Services'
+    MetaDescription = 'Embassy, VAC, biometric, and consultation appointment coordination with timely reminders and next-step support.'
+    Eyebrow = 'Appointment Scheduling'
+    HeroTitle = 'Reliable appointment scheduling for every critical step.'
+    HeroDescription = 'We coordinate consultation, embassy, biometric, and document-related appointments so you stay organized and on time.'
+    HeroImage = '9b6c3b03-4b05-41d8-b54f-6e91965b8510.jpg'
+    SecondaryLabel = 'All Services'
+    SecondaryHref = '/#services'
+    SectionLabel = 'What We Offer'
+    SectionTitle = 'Appointment support that keeps your application timeline on track.'
+    SectionDescription = 'From booking to reminders and follow-ups, we help reduce missed steps and last-minute scheduling confusion.'
+    JourneyTitle = 'Appointment Scheduling'
+    Features = @(
+      'Consultation and profile review slot booking',
+      'Embassy and VAC appointment coordination',
+      'Biometric scheduling assistance',
+      'Reschedule and slot-change support where available',
+      'Timely reminders for important dates',
+      'Checklist support before your appointment',
+      'Next-step guidance after attendance'
+    )
+  },
+  @{
+    Path = Join-Path $Root 'services\personalized-consultancy\index.html'
+    PageTitle = 'Personalized Consultancy | Fidelis Global Services'
+    MetaDescription = 'One-on-one consultancy tailored to your profile, destination, and long-term immigration goals.'
+    Eyebrow = 'Personalized Consultancy'
+    HeroTitle = 'One-on-one consultancy tailored to your profile and destination goals.'
+    HeroDescription = 'We provide focused advisory sessions that help you compare options, understand risks, and choose the most suitable pathway.'
+    HeroImage = '593c827f-b335-4dc0-bba6-f7acfeee011a.png'
+    SecondaryLabel = 'All Services'
+    SecondaryHref = '/#services'
+    SectionLabel = 'What We Offer'
+    SectionTitle = 'Consultancy built around your case, destination, and priorities.'
+    SectionDescription = 'Every applicant is different, so our consultancy sessions are structured around your timeline, background, and goals.'
+    JourneyTitle = 'Personalized Consultancy'
+    Features = @(
+      'One-on-one profile assessment',
+      'Destination and pathway comparison support',
+      'Eligibility review based on your case',
+      'Risk discussion and application planning',
+      'Refusal review and next-step strategy',
+      'Family and dependent planning guidance',
+      'Action plan tailored to your timeline'
+    )
+  },
+  @{
+    Path = Join-Path $Root 'countries\united-kingdom\index.html'
+    PageTitle = 'United Kingdom Visa & Immigration | Fidelis Global Services'
+    MetaDescription = 'UK visa support for student, business, skilled, and settlement pathways.'
+    Eyebrow = 'United Kingdom'
+    HeroTitle = 'Trusted UK visa guidance for study, business, skilled pathways, and settlement plans.'
+    HeroDescription = 'We help applicants understand UK routes clearly, prepare strong documentation, and move through the process with practical support.'
+    HeroImage = '7b4d535a-b8de-4c70-9d37-5727eb49f371.jpg'
+    SecondaryLabel = 'All Countries'
+    SecondaryHref = '/#countries'
+    SectionLabel = 'Visa Pathways'
+    SectionTitle = 'United Kingdom pathways we commonly support.'
+    SectionDescription = 'We assist with mainstream UK categories for students, business travellers, professionals, and long-term settlement planning.'
+    JourneyTitle = 'UK Visa'
+    Features = @(
+      'Student visa support for UK institutions',
+      'Business visitor and founder pathway guidance',
+      'Skilled and professional pathway planning',
+      'Family visa and dependent support',
+      'Document review before submission',
+      'Interview and compliance preparation',
+      'Settlement and long-term planning guidance'
+    )
+  },
+  @{
+    Path = Join-Path $Root 'countries\united-states\index.html'
+    PageTitle = 'United States Visa & Immigration | Fidelis Global Services'
+    MetaDescription = 'US visa support for student, business, investor, and professional pathways.'
+    Eyebrow = 'United States'
+    HeroTitle = 'Focused US visa guidance for study, business, and professional pathways.'
+    HeroDescription = 'We support applicants with structured documentation, interview preparation, and route planning across major US categories.'
+    HeroImage = 'ada808b9-7582-441b-b8d0-33fd34505080.jpg'
+    SecondaryLabel = 'All Countries'
+    SecondaryHref = '/#countries'
+    SectionLabel = 'Visa Pathways'
+    SectionTitle = 'United States pathways we commonly support.'
+    SectionDescription = 'Our team helps clients prepare carefully for the documentation-heavy nature of US applications and interviews.'
+    JourneyTitle = 'US Visa'
+    Features = @(
+      'Employment-based pathway guidance',
+      'Student visa preparation and interview support',
+      'Business travel visa guidance',
+      'Investor and founder pathway overview',
+      'Documentation and consistency review',
+      'Interview readiness support',
+      'Refusal review and reapplication strategy'
+    )
+  },
+  @{
+    Path = Join-Path $Root 'countries\australia\index.html'
+    PageTitle = 'Australia Visa & Immigration | Fidelis Global Services'
+    MetaDescription = 'Australia visa support for PR, student, and skilled migration pathways.'
+    Eyebrow = 'Australia'
+    HeroTitle = 'Australia visa guidance for PR, study, and skilled migration opportunities.'
+    HeroDescription = 'We help applicants navigate Australia-focused documentation, skills-based planning, and route selection for study, migration, and PR.'
+    HeroImage = 'ada808b9-7582-441b-b8d0-33fd34505080.jpg'
+    SecondaryLabel = 'All Countries'
+    SecondaryHref = '/#countries'
+    SectionLabel = 'Visa Pathways'
+    SectionTitle = 'Australia pathways we commonly support.'
+    SectionDescription = 'Australia remains a strong destination for study, skilled migration, and long-term PR planning.'
+    JourneyTitle = 'Australia Visa'
+    Features = @(
+      'PR profile review and migration planning',
+      'Student visa guidance for Australian institutions',
+      'Skilled migration and employer-sponsored pathway support',
+      'Points-based route guidance',
+      'Documentation and compliance review',
+      'Family inclusion planning',
+      'Post-decision next-step guidance'
+    )
+  },
+  @{
+    Path = Join-Path $Root 'countries\uae\index.html'
+    PageTitle = 'UAE Visa & Immigration | Fidelis Global Services'
+    MetaDescription = 'UAE visa support for business, professional, and residency-focused pathways.'
+    Eyebrow = 'UAE'
+    HeroTitle = 'UAE visa guidance for business, professional, and residency pathways.'
+    HeroDescription = 'We support clients planning UAE business activity, professional moves, and residency-aligned applications with practical documentation guidance.'
+    HeroImage = '5166189b-3604-42e7-8faa-12009e8766ea.jpg'
+    SecondaryLabel = 'All Countries'
+    SecondaryHref = '/#countries'
+    SectionLabel = 'Visa Pathways'
+    SectionTitle = 'UAE pathways we commonly support.'
+    SectionDescription = 'The UAE remains a strong destination for entrepreneurs, professionals, and clients seeking structured residency options.'
+    JourneyTitle = 'UAE Visa'
+    Features = @(
+      'Professional pathway guidance for UAE opportunities',
+      'Business and investor visa support',
+      'Residency-aligned documentation guidance',
+      'Company-linked processing support',
+      'Compliance and submission review',
+      'Family entry and dependent planning',
+      'Business route coordination support'
+    )
+  },
+  @{
+    Path = Join-Path $Root 'countries\canada\index.html'
+    PageTitle = 'Canada Visa & Immigration | Fidelis Global Services'
+    MetaDescription = 'Canada visa support for PR, student, and employment-linked pathways.'
+    Eyebrow = 'Canada'
+    HeroTitle = 'Canada-focused guidance for PR, study, and employment-linked pathways.'
+    HeroDescription = 'We help clients explore Canadian PR routes, student applications, and professional mobility options with structured guidance.'
+    HeroImage = '2a9ad507-2700-4990-bf79-2475ae3ab9bd.jpg'
+    SecondaryLabel = 'All Countries'
+    SecondaryHref = '/#countries'
+    SectionLabel = 'Visa Pathways'
+    SectionTitle = 'Canada pathways we commonly support.'
+    SectionDescription = 'Canada remains a strong destination for permanent residency planning, international study, and employment-linked routes.'
+    JourneyTitle = 'Canada Visa'
+    Features = @(
+      'PR route planning and profile review',
+      'Student visa support for Canada-based institutions',
+      'Employment-linked route guidance',
+      'Express Entry and documentation readiness guidance',
+      'Supporting document review before filing',
+      'Family inclusion planning',
+      'Refusal review and reapplication support'
+    )
+  },
+  @{
+    Path = Join-Path $Root 'countries\europe\index.html'
+    PageTitle = 'Europe Visa & Immigration | Fidelis Global Services'
+    MetaDescription = 'Europe-focused support for student visa, professional mobility, and residency-oriented pathways.'
+    Eyebrow = 'Europe'
+    HeroTitle = 'Europe-focused support for study, professional mobility, and residency pathways.'
+    HeroDescription = 'We guide clients through selected European destinations with practical support for student pathways, professional mobility, and longer-term residency planning.'
+    HeroImage = '7a5fab8b-ff21-4c05-8ab9-b8f1a202ab6c.jpg'
+    SecondaryLabel = 'All Countries'
+    SecondaryHref = '/#countries'
+    SectionLabel = 'Visa Pathways'
+    SectionTitle = 'European pathways we commonly support.'
+    SectionDescription = 'For Europe-focused cases, we help clients choose suitable destinations and prepare cleaner applications for study, mobility, and residency routes.'
+    JourneyTitle = 'Europe Visa'
+    Features = @(
+      'Student visa guidance for selected European destinations',
+      'Professional mobility support for employer-linked pathways',
+      'Residency and long-term planning guidance',
+      'Destination-specific documentation review',
+      'Travel history and profile alignment support',
+      'Family application planning where applicable',
+      'Support for route selection across multiple countries'
+    )
+  }
 )
 
-foreach ($svc in $services) {
-    $content = Build-ServicePage -slug $svc.slug -title $svc.title -icon $svc.icon -tagline $svc.tagline -description $svc.description -features $svc.features -bgImg $svc.bgImg
-    $path = "e:\fidelisglobal\services\$($svc.slug)\index.html"
-    [System.IO.File]::WriteAllText($path, $content, [System.Text.Encoding]::UTF8)
-    Write-Host "Written: $path"
-}
+foreach ($Page in $Pages) {
+  $Directory = Split-Path -Parent $Page.Path
+  if (-not (Test-Path $Directory)) {
+    New-Item -ItemType Directory -Path $Directory -Force | Out-Null
+  }
 
-Write-Host "All service pages done!"
+  $Html = Build-Page `
+    -PageTitle $Page.PageTitle `
+    -MetaDescription $Page.MetaDescription `
+    -Eyebrow $Page.Eyebrow `
+    -HeroTitle $Page.HeroTitle `
+    -HeroDescription $Page.HeroDescription `
+    -HeroImage $Page.HeroImage `
+    -SecondaryLabel $Page.SecondaryLabel `
+    -SecondaryHref $Page.SecondaryHref `
+    -SectionLabel $Page.SectionLabel `
+    -SectionTitle $Page.SectionTitle `
+    -SectionDescription $Page.SectionDescription `
+    -Features $Page.Features `
+    -JourneyTitle $Page.JourneyTitle
+
+  [System.IO.File]::WriteAllText($Page.Path, $Html, [System.Text.Encoding]::UTF8)
+  Write-Host "Updated $($Page.Path.Replace($Root, '.'))"
+}
