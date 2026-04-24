@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 420" role="img" aria-labelledby="title desc">
+  <title id="title">Fidelis Global</title>
+  <desc id="desc">Fidelis Global logo with phone number +971502361789</desc>
+  <rect width="1280" height="420" rx="18" fill="#ffffff"/>
+  <g transform="translate(72 58)" fill="#070b26">
+    <path d="M72 0h292l-34 86H116C72 86 48 62 48 26V0h24z"/>
+    <path d="M151 131h194l-34 86H132l-42 140H0l44-148c18-61 56-78 107-78z"/>
+    <path d="M226 38 326 151 226 264h-60l67-113-67-113h60z" fill="#ffffff"/>
+    <path d="M308 131h78l-34 86h-88l44-86z"/>
+  </g>
+  <line x1="520" y1="63" x2="520" y2="204" stroke="#e8e8e8" stroke-width="3"/>
+  <text x="565" y="134" font-family="Arial Black, Montserrat, Arial, sans-serif" font-size="82" font-weight="900" font-style="italic" letter-spacing="2" fill="#070b26">FIDELIS</text>
+  <text x="565" y="218" font-family="Arial, Montserrat, sans-serif" font-size="72" font-weight="500" letter-spacing="4" fill="#070b26">GLOBAL</text>
+  <rect x="250" y="258" width="950" height="110" fill="#070b26"/>
+  <circle cx="382" cy="313" r="42" fill="#ffc914"/>
+  <path d="M370 289c8-5 14 3 18 11 3 6 1 11-3 14l-5 3c10 17 21 25 37 32l5-5c4-4 9-4 14-1 8 5 14 11 12 18-2 6-8 13-18 13-37 0-82-44-82-82 0-9 9-15 22-3z" fill="#070b26"/>
+  <text x="512" y="337" font-family="Arial Black, Montserrat, Arial, sans-serif" font-size="72" font-weight="900" letter-spacing="4" fill="#ffc914">+971502361789</text>
+</svg>

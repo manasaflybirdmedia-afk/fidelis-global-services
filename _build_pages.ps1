@@ -1,4 +1,4 @@
-Set-StrictMode -Version Latest
+﻿Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
 $Root = Split-Path -Parent $MyInvocation.MyCommand.Path
@@ -12,7 +12,7 @@ function Get-Header {
 <header class="header" id="top">
   <div class="container header-inner">
     <a class="brand" href="/">
-      <img class="brand-logo" src="/media/logo.jpeg" alt="Fidelis Global Services" />
+      <img class="brand-logo" src="/media/logo-wide.svg" alt="Fidelis Global Services" />
     </a>
     <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
       <span></span><span></span><span></span>
@@ -37,7 +37,7 @@ function Get-Footer {
 <footer class="footer">
   <div class="container footer-main">
     <div class="footer-brand">
-      <a class="brand" href="/"><img class="brand-logo footer-logo" src="/media/logo.jpeg" alt="Fidelis Global Services" /></a>
+      <a class="brand" href="/"><img class="brand-logo footer-logo" src="/media/logo-wide.svg" alt="Fidelis Global Services" /></a>
       <p>Your trusted partner for passport, visa, travel, and immigration assistance worldwide.</p>
       <div class="footer-contact-links">
         <a href="tel:$PhoneHref">$PhoneDisplay</a>
@@ -47,12 +47,11 @@ function Get-Footer {
     <div class="footer-col">
       <h4>Services</h4>
       <ul>
-        <li><a href="/services/student-visas/">Student Visa</a></li>
         <li><a href="/services/tourist-visas/">Tourist Visa</a></li>
-        <li><a href="/services/business-visas/">Business &amp; PR</a></li>
-        <li><a href="/services/document-guidance/">Document Guidance</a></li>
-        <li><a href="/services/appointment-scheduling/">Appointment Scheduling</a></li>
-        <li><a href="/services/personalized-consultancy/">Personalized Consultancy</a></li>
+        <li><a href="/services/visit-visas/">Visit Visa</a></li>
+        <li><a href="/services/study-visas/">Study Visa</a></li>
+        <li><a href="/services/work-visa-assistance/">Work Visa Assistance</a></li>
+        <li><a href="/services/business-setup-assistance/">Business Setup Assistance</a></li>
       </ul>
     </div>
     <div class="footer-col">
@@ -238,30 +237,6 @@ $Footer
 
 $Pages = @(
   @{
-    Path = Join-Path $Root 'services\student-visas\index.html'
-    PageTitle = 'Student Visa Services | Fidelis Global Services'
-    MetaDescription = 'Complete student visa support for admissions, documentation, interview readiness, and pre-departure guidance.'
-    Eyebrow = 'Student Visa'
-    HeroTitle = 'Confident student visa guidance for your study abroad plans.'
-    HeroDescription = 'From admissions and financial documentation to interview preparation and pre-departure support, we help students move forward with clarity.'
-    HeroImage = '4014b254-d8f7-408c-a2b5-24423fec3d4c.png'
-    SecondaryLabel = 'All Services'
-    SecondaryHref = '/#services'
-    SectionLabel = 'What We Offer'
-    SectionTitle = 'Student visa support built around real application requirements.'
-    SectionDescription = 'Our team helps you prepare a strong student visa file with practical support at every stage.'
-    JourneyTitle = 'Student Visa'
-    Features = @(
-      'University shortlisting and profile review',
-      'Documentation checklist and application guidance',
-      'Financial file review and statement support',
-      'Statement of purpose and interview preparation',
-      'Country-specific compliance guidance',
-      'Pre-departure briefing and travel readiness',
-      'Support for refusals and reapplications'
-    )
-  },
-  @{
     Path = Join-Path $Root 'services\tourist-visas\index.html'
     PageTitle = 'Tourist Visa Services | Fidelis Global Services'
     MetaDescription = 'Short-stay tourist visa support for holiday travel, family visits, and destination-specific documentation guidance.'
@@ -286,99 +261,99 @@ $Pages = @(
     )
   },
   @{
-    Path = Join-Path $Root 'services\business-visas\index.html'
-    PageTitle = 'Business & PR Pathways | Fidelis Global Services'
-    MetaDescription = 'Business migration, investor pathways, and PR guidance for clients planning long-term international mobility.'
-    Eyebrow = 'Business & PR'
-    HeroTitle = 'Business migration and PR guidance for long-term global plans.'
-    HeroDescription = 'We support business visa, investor, and permanent residency pathways with structured planning, documentation guidance, and filing support.'
-    HeroImage = 'ada808b9-7582-441b-b8d0-33fd34505080.jpg'
+    Path = Join-Path $Root 'services\visit-visas\index.html'
+    PageTitle = 'Visit Visa Assistance | Fidelis Global Services'
+    MetaDescription = 'Visit visa assistance for family visits, events, short stays, and destination-specific documentation guidance.'
+    Eyebrow = 'Visit Visa'
+    HeroTitle = 'Clear visit visa assistance for family visits, events, and short stays.'
+    HeroDescription = 'We help applicants prepare clean visit visa files with practical document support, travel-plan review, and submission support.'
+    HeroImage = 'hero-bg-S6wG8xwz.jpg'
     SecondaryLabel = 'All Services'
     SecondaryHref = '/#services'
     SectionLabel = 'What We Offer'
-    SectionTitle = 'Business and PR support aligned to your investment, expansion, or settlement goals.'
-    SectionDescription = 'Our team helps you assess the right route and build a clean application strategy for business mobility or permanent residency.'
-    JourneyTitle = 'Business & PR'
+    SectionTitle = 'Visit visa support focused on purpose, proof, and presentation.'
+    SectionDescription = 'Our team helps you prepare a visit visa application that clearly explains your travel purpose, stay duration, and supporting documents.'
+    JourneyTitle = 'Visit Visa'
     Features = @(
-      'Business visa and investor pathway guidance',
-      'PR profile review and route planning',
-      'Documentation and source-of-funds support',
-      'Application strategy for founders and entrepreneurs',
-      'Country-specific residency and settlement guidance',
-      'Family inclusion planning where available',
-      'Support for long-term relocation decisions'
+      'Family visit and short-stay visa guidance',
+      'Purpose-of-visit and itinerary review',
+      'Host, invitation, and supporting document support',
+      'Financial proof and travel history review',
+      'Destination-specific checklist preparation',
+      'Application form and appointment guidance',
+      'Refusal review and reapplication support where applicable'
     )
   },
   @{
-    Path = Join-Path $Root 'services\document-guidance\index.html'
-    PageTitle = 'Document Guidance | Fidelis Global Services'
-    MetaDescription = 'Structured document guidance to keep your visa or immigration file complete, clear, and submission-ready.'
-    Eyebrow = 'Document Guidance'
-    HeroTitle = 'Clear document guidance for smoother visa and immigration preparation.'
-    HeroDescription = 'We help you organise, review, and strengthen your file before submission so every required document is ready and consistent.'
-    HeroImage = '73767eea-5b13-42c5-9dc9-364d163767f0.jpg'
+    Path = Join-Path $Root 'services\study-visas\index.html'
+    PageTitle = 'Study Visa Services | Fidelis Global Services'
+    MetaDescription = 'Complete study visa support for admissions, documentation, financial file review, interview readiness, and pre-departure guidance.'
+    Eyebrow = 'Study Visa'
+    HeroTitle = 'Confident study visa guidance for your education abroad plans.'
+    HeroDescription = 'From admissions and financial documentation to interview preparation and pre-departure support, we help students move forward with clarity.'
+    HeroImage = '4014b254-d8f7-408c-a2b5-24423fec3d4c.png'
     SecondaryLabel = 'All Services'
     SecondaryHref = '/#services'
     SectionLabel = 'What We Offer'
-    SectionTitle = 'Document support focused on accuracy, clarity, and readiness.'
-    SectionDescription = 'Our team helps reduce avoidable document issues by checking consistency, completeness, and submission readiness.' 
-    JourneyTitle = 'Document Guidance'
+    SectionTitle = 'Study visa support built around real application requirements.'
+    SectionDescription = 'Our team helps you prepare a strong study visa file with practical support at every stage.'
+    JourneyTitle = 'Study Visa'
     Features = @(
-      'Personalized document checklist preparation',
-      'File review before submission',
-      'Guidance on financial and supporting records',
-      'Support for formatting and document order',
-      'Identification of missing or inconsistent items',
-      'Advice on affidavits, translations, and supporting letters',
-      'Submission-readiness review with practical next steps'
+      'Course and institution shortlisting support',
+      'Documentation checklist and application guidance',
+      'Financial file review and statement support',
+      'Statement of purpose and interview preparation',
+      'Country-specific compliance guidance',
+      'Pre-departure briefing and travel readiness',
+      'Support for refusals and reapplications'
     )
   },
   @{
-    Path = Join-Path $Root 'services\appointment-scheduling\index.html'
-    PageTitle = 'Appointment Scheduling | Fidelis Global Services'
-    MetaDescription = 'Embassy, VAC, biometric, and consultation appointment coordination with timely reminders and next-step support.'
-    Eyebrow = 'Appointment Scheduling'
-    HeroTitle = 'Reliable appointment scheduling for every critical step.'
-    HeroDescription = 'We coordinate consultation, embassy, biometric, and document-related appointments so you stay organized and on time.'
+    Path = Join-Path $Root 'services\work-visa-assistance\index.html'
+    PageTitle = 'Work Visa Assistance | Fidelis Global Services'
+    MetaDescription = 'Work visa assistance for eligibility checks, employer-linked documents, application preparation, and destination-specific filing support.'
+    Eyebrow = 'Work Visa Assistance'
+    HeroTitle = 'Practical work visa assistance for employment-linked opportunities.'
+    HeroDescription = 'We help applicants prepare employer-linked documentation, understand visa requirements, and move through work visa applications with clearer next steps.'
     HeroImage = '9b6c3b03-4b05-41d8-b54f-6e91965b8510.jpg'
     SecondaryLabel = 'All Services'
     SecondaryHref = '/#services'
     SectionLabel = 'What We Offer'
-    SectionTitle = 'Appointment support that keeps your application timeline on track.'
-    SectionDescription = 'From booking to reminders and follow-ups, we help reduce missed steps and last-minute scheduling confusion.'
-    JourneyTitle = 'Appointment Scheduling'
+    SectionTitle = 'Work visa support for applicants, employees, and skilled professionals.'
+    SectionDescription = 'Our team helps you organize the documents and application details needed for work-related visa categories.'
+    JourneyTitle = 'Work Visa'
     Features = @(
-      'Consultation and profile review slot booking',
-      'Embassy and VAC appointment coordination',
-      'Biometric scheduling assistance',
-      'Reschedule and slot-change support where available',
-      'Timely reminders for important dates',
-      'Checklist support before your appointment',
-      'Next-step guidance after attendance'
+      'Work visa eligibility and profile review',
+      'Employer-linked document support',
+      'Job offer and supporting record review',
+      'Application form and filing support',
+      'Country-specific requirement guidance',
+      'Dependent and family inclusion guidance where available',
+      'Post-decision and next-step support'
     )
   },
   @{
-    Path = Join-Path $Root 'services\personalized-consultancy\index.html'
-    PageTitle = 'Personalized Consultancy | Fidelis Global Services'
-    MetaDescription = 'One-on-one consultancy tailored to your profile, destination, and long-term immigration goals.'
-    Eyebrow = 'Personalized Consultancy'
-    HeroTitle = 'One-on-one consultancy tailored to your profile and destination goals.'
-    HeroDescription = 'We provide focused advisory sessions that help you compare options, understand risks, and choose the most suitable pathway.'
-    HeroImage = '593c827f-b335-4dc0-bba6-f7acfeee011a.png'
+    Path = Join-Path $Root 'services\business-setup-assistance\index.html'
+    PageTitle = 'Business Setup Assistance | Fidelis Global Services'
+    MetaDescription = 'Business setup assistance for company formation planning, investor documentation, business mobility, and residency-linked next steps.'
+    Eyebrow = 'Business Setup Assistance'
+    HeroTitle = 'Business setup assistance for founders, investors, and expansion plans.'
+    HeroDescription = 'We support clients with business setup planning, company-linked documentation, investor route guidance, and practical next-step coordination.'
+    HeroImage = 'ada808b9-7582-441b-b8d0-33fd34505080.jpg'
     SecondaryLabel = 'All Services'
     SecondaryHref = '/#services'
     SectionLabel = 'What We Offer'
-    SectionTitle = 'Consultancy built around your case, destination, and priorities.'
-    SectionDescription = 'Every applicant is different, so our consultancy sessions are structured around your timeline, background, and goals.'
-    JourneyTitle = 'Personalized Consultancy'
+    SectionTitle = 'Business setup support aligned to your expansion or investment goals.'
+    SectionDescription = 'Our team helps you understand requirements, prepare documents, and plan the right setup pathway for your business goals.'
+    JourneyTitle = 'Business Setup'
     Features = @(
-      'One-on-one profile assessment',
-      'Destination and pathway comparison support',
-      'Eligibility review based on your case',
-      'Risk discussion and application planning',
-      'Refusal review and next-step strategy',
-      'Family and dependent planning guidance',
-      'Action plan tailored to your timeline'
+      'Business setup and route planning',
+      'Investor and founder documentation guidance',
+      'Company-linked visa and residency guidance',
+      'Source-of-funds and supporting record review',
+      'Business activity and structure discussion',
+      'Family inclusion planning where available',
+      'Next-step coordination after approval or setup'
     )
   },
   @{
@@ -396,7 +371,7 @@ $Pages = @(
     SectionDescription = 'We assist with mainstream UK categories for students, business travellers, professionals, and long-term settlement planning.'
     JourneyTitle = 'UK Visa'
     Features = @(
-      'Student visa support for UK institutions',
+      'Study visa support for UK institutions',
       'Business visitor and founder pathway guidance',
       'Skilled and professional pathway planning',
       'Family visa and dependent support',
@@ -421,7 +396,7 @@ $Pages = @(
     JourneyTitle = 'US Visa'
     Features = @(
       'Employment-based pathway guidance',
-      'Student visa preparation and interview support',
+      'Study visa preparation and interview support',
       'Business travel visa guidance',
       'Investor and founder pathway overview',
       'Documentation and consistency review',
@@ -445,7 +420,7 @@ $Pages = @(
     JourneyTitle = 'Australia Visa'
     Features = @(
       'PR profile review and migration planning',
-      'Student visa guidance for Australian institutions',
+      'Study visa guidance for Australian institutions',
       'Skilled migration and employer-sponsored pathway support',
       'Points-based route guidance',
       'Documentation and compliance review',
@@ -493,7 +468,7 @@ $Pages = @(
     JourneyTitle = 'Canada Visa'
     Features = @(
       'PR route planning and profile review',
-      'Student visa support for Canada-based institutions',
+      'Study visa support for Canada-based institutions',
       'Employment-linked route guidance',
       'Express Entry and documentation readiness guidance',
       'Supporting document review before filing',
@@ -504,7 +479,7 @@ $Pages = @(
   @{
     Path = Join-Path $Root 'countries\europe\index.html'
     PageTitle = 'Europe Visa & Immigration | Fidelis Global Services'
-    MetaDescription = 'Europe-focused support for student visa, professional mobility, and residency-oriented pathways.'
+    MetaDescription = 'Europe-focused support for study visa, professional mobility, and residency-oriented pathways.'
     Eyebrow = 'Europe'
     HeroTitle = 'Europe-focused support for study, professional mobility, and residency pathways.'
     HeroDescription = 'We guide clients through selected European destinations with practical support for student pathways, professional mobility, and longer-term residency planning.'
@@ -516,7 +491,7 @@ $Pages = @(
     SectionDescription = 'For Europe-focused cases, we help clients choose suitable destinations and prepare cleaner applications for study, mobility, and residency routes.'
     JourneyTitle = 'Europe Visa'
     Features = @(
-      'Student visa guidance for selected European destinations',
+      'Study visa guidance for selected European destinations',
       'Professional mobility support for employer-linked pathways',
       'Residency and long-term planning guidance',
       'Destination-specific documentation review',

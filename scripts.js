@@ -51,6 +51,54 @@
     }
   });
 
+  var hero = document.querySelector('.hero-carousel');
+  if (hero) {
+    var slides = hero.querySelectorAll('.hero-slide');
+    var dots = hero.querySelectorAll('.hero-dot');
+    var currentSlide = 0;
+    var heroTimer = null;
+
+    var showSlide = function (index) {
+      if (!slides.length) { return; }
+      currentSlide = (index + slides.length) % slides.length;
+
+      slides.forEach(function (slide, slideIndex) {
+        var isActive = slideIndex === currentSlide;
+        slide.classList.toggle('active', isActive);
+        slide.setAttribute('aria-hidden', isActive ? 'false' : 'true');
+      });
+
+      dots.forEach(function (dot, dotIndex) {
+        dot.classList.toggle('active', dotIndex === currentSlide);
+      });
+    };
+
+    var startHero = function () {
+      if (heroTimer || slides.length < 2) { return; }
+      heroTimer = setInterval(function () {
+        showSlide(currentSlide + 1);
+      }, 5500);
+    };
+
+    var stopHero = function () {
+      if (!heroTimer) { return; }
+      clearInterval(heroTimer);
+      heroTimer = null;
+    };
+
+    dots.forEach(function (dot) {
+      dot.addEventListener('click', function () {
+        stopHero();
+        showSlide(parseInt(dot.dataset.heroSlide, 10) || 0);
+        startHero();
+      });
+    });
+
+    hero.addEventListener('mouseenter', stopHero);
+    hero.addEventListener('mouseleave', startHero);
+    startHero();
+  }
+
   var consultBtn = document.querySelector('.js-consult-btn');
   if (consultBtn) {
     consultBtn.addEventListener('click', function (event) {
