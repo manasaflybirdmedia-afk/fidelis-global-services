@@ -1,0 +1,129 @@
+﻿<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Secure Payment | Fidelis Global Services</title>
+    <meta
+      name="description"
+      content="Secure consultation payment gateway for Fidelis Global Services. Pay online for visa, passport, and immigration assistance services."
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="header">
+      <div class="container header-inner">
+        <a class="brand" href="/">
+          <img class="brand-logo" src="/logo.jpeg" alt="Fidelis Global logo" />
+          </a>
+        <nav class="nav" aria-label="Primary navigation">
+          <a href="/">Home</a>
+          <a href="/services/tourist-visas/">Tourist</a>
+          <a href="/services/student-visas/">Student</a>
+          <a href="/services/work-permits/">Work</a>
+          <a href="/services/business-visas/">Business</a>
+        </nav>
+        <a class="button primary" href="#payment">Pay Now</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container hero-grid">
+          <div class="hero-copy">
+            <p class="section-title">Secure checkout</p>
+            <h1>Pay consultation fees safely online.</h1>
+            <p>Our payment flow is designed for confidence. Book your consultation or service package with verified payment options and instant confirmation.</p>
+            <a class="button primary" href="#payment">Proceed to Payment</a>
+          </div>
+          <div class="hero-panel panel-block">
+            <strong>Secure payment features</strong>
+            <ul>
+              <li>Encrypted card payment processing</li>
+              <li>Trusted gateway integration</li>
+              <li>Receipts and booking confirmation</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="payment" class="section light">
+        <div class="container">
+          <div class="section-header">
+            <p class="section-title">Payment Details</p>
+            <h2>Complete your booking with a secure payment.</h2>
+            <p>Please fill in your details below to confirm your consultation or service package.</p>
+          </div>
+          <div class="panel card" style="margin-top:32px; max-width:760px;">
+            <form class="js-form" data-form-name="payment" data-submit-text="Pay Now" data-success-message="Your payment details have been submitted." action="#" method="post">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="payment-name">Full Name</label>
+                  <input class="input" type="text" id="payment-name" name="name" required />
+                </div>
+                <div class="form-group">
+                  <label for="payment-email">Email</label>
+                  <input class="input" type="email" id="payment-email" name="email" required />
+                </div>
+                <div class="form-group">
+                  <label for="payment-phone">Phone Number</label>
+                  <input class="input" type="tel" id="payment-phone" name="phone" required />
+                </div>
+                <div class="form-group">
+                  <label for="payment-package">Service Package</label>
+                  <select class="select" id="payment-package" name="package" required>
+                    <option value="">Select package</option>
+                    <option>Basic Consultation - $85</option>
+                    <option>Standard Assistance - $220</option>
+                    <option>Premium Full Support - $420</option>
+                  </select>
+                </div>
+                <div class="form-group form-group--full">
+                  <label for="payment-card">Card Details</label>
+                  <input class="input" type="text" id="payment-card" name="card_info" placeholder="Card number placeholder" required />
+                </div>
+              </div>
+              <div class="form-footer">
+                <button class="button primary" type="submit">Pay Now</button>
+                <p class="form-hint">This is a placeholder payment form. Actual gateway integration can be added with Stripe, PayPal, or Razorpay.</p>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer-grid">
+        <div>
+          <a class="brand" href="/">
+          <img class="brand-logo" src="/logo.jpeg" alt="Fidelis Global logo" />
+          </a>
+        </div>
+        <div>
+          <h4>Helpful links</h4>
+          <ul style="list-style:none;padding:0;margin:0;display:grid;gap:10px;color:var(--muted);">
+            <li><a href="/">Home</a></li>
+            <li><a href="/services/tourist-visas/">Tourist Visa</a></li>
+            <li><a href="/services/student-visas/">Student Visa</a></li>
+            <li><a href="/services/work-permits/">Work Visa</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <p>Email: hello@fidelisglobal.com</p>
+          <p>Phone: +1 800 555 0148</p>
+        </div>
+      </div>
+      <div class="container footer-note">
+        <span>© 2026 Fidelis Global Services.</span>
+        <span>Secure payments for fast service response.</span>
+        <p class="footer-credit">Designed &amp; Developed by <a href="https://flybirdmedia.com" target="_blank" rel="noopener">Fly Bird Media Team</a></p>
+      </div>
+    </footer>
+
+    <a class="whatsapp-button" href="https://wa.me/919999999999?text=Hello%20Fidelis%20Global%20Services%20Payment" target="_blank" aria-label="Chat on WhatsApp">📱</a>
+    <script src="/scripts.js"></script>
+  </body>
+</html>
